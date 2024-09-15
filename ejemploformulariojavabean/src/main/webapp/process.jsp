@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!-- JavaBean -->
+<jsp:useBean id="usuario" scope="request" class="com.mycompany.ejemploformulariojavabean.entities.Usuario" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,11 +35,10 @@
             nombre = request.getParameter("nombre");
             email = request.getParameter("email");
             %>
-            <b>Usetd indicó la siguiente información</b>
-            <br>
-            <b>Nombre: </b> <%=nombre%> <!-- expresión JSP -->
-            <br>
-            <b>Email: </b> <%=email%>
+            <jsp:setProperty name="usuario" property="nombre" value="<%=nombre%>"></jsp:setProperty>
+            <jsp:setProperty name="usuario" property="email" value="<%=email%>"></jsp:setProperty>
+            <jsp:forward page="/process2.jsp"></jsp:forward>
+
         <%}%>
     </body>
 </html>
