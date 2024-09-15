@@ -28,7 +28,16 @@
                <input type="submit" value="Enviar">
            </form>
         <%} else { %>
-        No hace falta
+        <!-- Scriptlet JSP -->
+            <%String nombre, email;
+            nombre = request.getParameter("nombre");
+            email = request.getParameter("email");
+            %>
+            <b>Usetd indicó la siguiente información</b>
+            <br>
+            <b>Nombre: </b> <%=nombre%> <!-- expresión JSP -->
+            <br>
+            <b>Email: </b> <%=email%>
         <%}%>
     </body>
 </html>
