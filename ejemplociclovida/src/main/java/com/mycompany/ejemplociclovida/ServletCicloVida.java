@@ -17,6 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletCicloVida extends HttpServlet {
 
+    int contadorAccesos = 0;
+
+    @Override
+    public void init() throws ServletException {
+        contadorAccesos = 5;
+        super.init(); //siempre llamar a init
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,10 +42,16 @@ public class ServletCicloVida extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletCicloVida</title>");            
+            out.println("<title>Accesos</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ServletCicloVida at " + request.getContextPath() + "</h1>");
+            if (contadorAccesos != 0) {
+                out.println("Quedan " + contadorAccesos + " accesos antes de dejar de mostrar el mensaje");
+                contadorAccesos--;
+            } else {
+                out.println("No te quedan más intentos");
+
+            }
             out.println("</body>");
             out.println("</html>");
         }
