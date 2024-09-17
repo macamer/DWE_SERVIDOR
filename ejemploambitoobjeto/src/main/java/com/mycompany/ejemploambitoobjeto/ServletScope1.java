@@ -6,6 +6,7 @@ package com.mycompany.ejemploambitoobjeto;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,16 +31,18 @@ public class ServletScope1 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletScope1</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletScope1 at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            // Asignar un parámetro via request
+            request.setAttribute("atributoRequest", "Prueba de atributo con alcance Request");
+
+            //Asignar un atributo para el alcance session
+            request.getSession().setAttribute("atributoSession", "Prueba de atributo con alcance Session");
+            
+            //Asignar un atributo para el alcance application
+            request.getServletContext().setAttribute("atributoApplication", "Prueba de atributo con alcance Application");
+            
+            //Redirigimos hacia ServletScope2
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/ServletScope2");
+            rd.forward(request, response);
         }
     }
 
