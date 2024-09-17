@@ -37,7 +37,13 @@ public class ServletScope3 extends HttpServlet {
             out.println("<title>Servlet ServletScope3</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ServletScope3 at " + request.getContextPath() + "</h1>");
+                        out.println("<b>Los atributos establecidos son: </b><br>");
+            out.println("Atributo Request: " + (String) request.getAttribute("atributoRequest"));
+            out.println("<br>");
+            out.println("Atributo Session: " + (String) request.getSession().getAttribute("atributoSession"));
+            out.println("<br>");
+            out.println("Atributo Application: " + (String) this.getServletContext().getAttribute("atributoApplication"));
+            out.println("<br>");
             out.println("</body>");
             out.println("</html>");
         }
