@@ -30,16 +30,21 @@ public class RecogeDatosServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //crear un alumno
+        //crear un alumno (objeto)
         Alumno alumno = new Alumno();
-        //recoger datos del formulario
+        //inicializar los datos del formulario index.jsp
         alumno.setNombre(request.getParameter("nombreP"));
         alumno.setPrimerApellido(request.getParameter("primerApellidoP"));
         alumno.setSegundoApellido(request.getParameter("segundoApellidoP"));
         alumno.setEdad(Integer.valueOf(request.getParameter("edadP")));
         
-        //redireccionar estos datos a un nuevo jsp
+        //pasar al request el objeto creado
+        request.setAttribute("alumnoAtrib", alumno);
+        
+        //instanciar el requestDispatcher para redireccionar al JSP de salida
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/mostrarDatos.jsp");
+        //redirreccionar 
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
