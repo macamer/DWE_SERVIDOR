@@ -15,10 +15,10 @@
         <h1>Entrada de datos</h1>
         <form action="RecogeDatosServlet" method="POST">
             <h2>Datos de alumnos</h2>
-            Nombre: <input type="text" name="nombre"><br>
-            Primer Apellido: <input type="text" name="primerApellido"><br>
-            Segundo Apellido: <input type="text" name="segundoApellido"><br>
-            Edad: <input type="text" name="edad"><br>
+            Nombre: <input type="text" name="nombreP"><br>
+            Primer Apellido: <input type="text" name="primerApellidoP"><br>
+            Segundo Apellido: <input type="text" name="segundoApellidoP"><br>
+            Edad: <input type="text" name="edadP"><br>
             <input type="submit" value="Enviar">
         </form>
     </body>
