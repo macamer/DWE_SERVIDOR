@@ -2,10 +2,17 @@
 <html xmlns:th="htt://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title th:text="${titulo}"></title>
+		<title>Formulario de alumno</title>
 	</head>
 	<body>
-		<p th:text=${mensaje}></p>
-		
+		<h1>Formulario de entrada de datos</h1>
+		<!--el th es porque es un objeto dinámico de Thymeleaf-->
+		<form th:action="@{/altaAlumno}" th:object="${objetoAlumno}" method="POST">
+			<!--con th:field se indica y recoge en campo al que hace referencia-->
+			<p>Nombre: <input type="text" th:field="*={nombre}"/></p>
+			<p>Apeliidos: <input type="text" th:field="*={apellidos}"/></p>
+			<p>Edad: <input type="text" th:field="*={edad}"/></p>
+			<p><input type="submite" value="Enviar"/></p>
+		</form>
 	</body>
 </html>
