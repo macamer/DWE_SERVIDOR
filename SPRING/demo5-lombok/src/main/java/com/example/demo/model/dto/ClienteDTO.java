@@ -31,7 +31,7 @@ public class ClienteDTO implements Serializable {
 		clienteDTO.setClaveSeguridad(cliente.getClaveSeguridad());
 		clienteDTO.setEmail(cliente.getEmail());
 		
-		RecomendacionDTO rec = RecomendacionDTO.convertToDTO(cliente.getRecomendacion()); //convert to DTO
+		RecomendacionDTO rec = RecomendacionDTO.convertToDTO(cliente.getRecomendacion(), clienteDTO); //convert to DTO
 		clienteDTO.setRecomendacionDTO(rec);
 		
 		return clienteDTO;
@@ -47,7 +47,7 @@ public class ClienteDTO implements Serializable {
 		cliente.setClaveSeguridad(clienteDTO.getClaveSeguridad());
 		cliente.setEmail(clienteDTO.getEmail());
 		
-		Recomendacion rec = RecomendacionDTO.convertToEntity(clienteDTO.getRecomendacionDTO());
+		Recomendacion rec = RecomendacionDTO.convertToEntity(clienteDTO.getRecomendacionDTO(), cliente);
 		cliente.setRecomendacion(rec);
 		
 		return cliente;

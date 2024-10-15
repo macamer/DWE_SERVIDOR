@@ -2,10 +2,12 @@ package com.example.demo.model.dto;
 
 import java.io.Serializable;
 
+import com.example.demo.repository.entity.Cliente;
 import com.example.demo.repository.entity.Recomendacion;
-
+import lombok.Data;
 import lombok.ToString;
 
+@Data
 public class RecomendacionDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,13 +16,25 @@ public class RecomendacionDTO implements Serializable {
 	@ToString.Exclude //don't show Cliente into toString()
 	private ClienteDTO clienteDTO;
 	
-	public static RecomendacionDTO convertToDTO(Recomendacion recomendacion) {
-		// TODO Auto-generated method stub
-		return null;
+	//convert entity to DTO
+	public static RecomendacionDTO convertToDTO(Recomendacion recomendacion, ClienteDTO clienteDTO) {
+				
+		RecomendacionDTO recomendacionDTO = new RecomendacionDTO();
+		recomendacionDTO.setId(recomendacion.getId());
+		recomendacionDTO.setObservaciones(recomendacion.getObservaciones());
+		recomendacionDTO.setClienteDTO(clienteDTO);
+		
+		return recomendacionDTO;
 	}
 
-	public static Recomendacion convertToEntity(RecomendacionDTO recomendacionDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	//convert DTO to entity
+	public static Recomendacion convertToEntity(RecomendacionDTO recomendacionDTO, Cliente cliente) {
+		
+		Recomendacion recomendacion = new Recomendacion();
+		recomendacion.setId(recomendacionDTO.getId());
+		recomendacion.setObservaciones(recomendacionDTO.getObservaciones());
+		recomendacion.setCliente(cliente);
+
+		return recomendacion;
 	}
 }
