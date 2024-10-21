@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.dto.ClienteDTO;
+import com.example.demo.repository.dao.ClienteRepository;
 import com.example.demo.repository.entity.Cliente;
 
 @Service
@@ -25,7 +26,6 @@ public class ClienteServiceImpl implements ClienteService {
 		log.info("ClienteServiceImpl - findAll: Lista de todos los clientes");
 		
 		List<ClienteDTO> listaClientesDTO = null;
-		//repository is missing
 		List<Cliente> listaClientes = clienteRepository.findAll();
 		for(int i=0; i<listaClientes.size(); i++) {
 			Cliente cliente = listaClientes.get(i);
@@ -58,7 +58,6 @@ public class ClienteServiceImpl implements ClienteService {
 		log.info("ClienteServiceImpl - save: salvamos el cliente: " + clienteDTO.toString());
 		
 		Cliente cliente = clienteDTO.contertToEntity(clienteDTO);
-		//repository is missing
 		clienteRepository.save(cliente);		
 	}
 
@@ -70,7 +69,6 @@ public class ClienteServiceImpl implements ClienteService {
 		cliente.setId(clienteDTO.getId());
 		//repository is missing
 		clienteRepository.delete(cliente);	
-		
 	}
 
 }
