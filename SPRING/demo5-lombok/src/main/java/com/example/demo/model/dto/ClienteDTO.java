@@ -52,4 +52,12 @@ public class ClienteDTO implements Serializable {
 		
 		return cliente;
 	}
+
+	//empty constructor
+	public ClienteDTO() {
+		super();
+		this.recomendacionDTO = new RecomendacionDTO();
+	}
+	
+	
 }
