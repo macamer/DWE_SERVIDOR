@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,12 +21,12 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 	
 
-	@Override
+	@Override 
 	public List<ClienteDTO> findAll() {
 		
 		log.info("ClienteServiceImpl - findAll: Lista de todos los clientes");
 		
-		List<ClienteDTO> listaClientesDTO = null;
+		List<ClienteDTO> listaClientesDTO = new ArrayList<ClienteDTO>();
 		List<Cliente> listaClientes = clienteRepository.findAll();
 		for(int i=0; i<listaClientes.size(); i++) {
 			Cliente cliente = listaClientes.get(i);
