@@ -49,7 +49,7 @@ public class ClienteController {
 		clienteDTO = clienteService.findById(clienteDTO);
 		
 		ModelAndView mav = new ModelAndView("clienteshow");
-		mav.addObject("ClienteDTO", clienteDTO);
+		mav.addObject("clienteDTO", clienteDTO);
 		
 		return mav;
 	}
@@ -61,6 +61,7 @@ public class ClienteController {
 		
 		ModelAndView mav = new ModelAndView ("clienteform");
 		mav.addObject("clienteDTO", new ClienteDTO());
+		mav.addObject("add", true);
 		
 		return mav;
 	}
@@ -73,7 +74,7 @@ public class ClienteController {
 		//call service layer in order to save the client
 		clienteService.save(clienteDTO);
 		
-		ModelAndView mav = new ModelAndView ("clientes"); //call back the view findAll()
+		ModelAndView mav = new ModelAndView ("redirect:/clientes"); //call back the view findAll()
 		
 		return mav;
 	}
@@ -89,7 +90,8 @@ public class ClienteController {
 		clienteDTO = clienteService.findById(clienteDTO);
 		
 		ModelAndView mav = new ModelAndView ("clienteform");
-		mav.addObject("clienteDTO", new ClienteDTO());
+		mav.addObject("clienteDTO", clienteDTO);
+		mav.addObject("add", false);
 		
 		return mav;
 	}
