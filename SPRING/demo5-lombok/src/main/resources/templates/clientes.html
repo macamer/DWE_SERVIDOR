@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{./css/style.css}" />
 	<title>Mantenimiento de clientes</title>
 </head>
 
@@ -12,7 +13,7 @@
 		<h2 th:if="${listaClientesDTO.isEmpty()}">No hay clientes</h2>
 		<div th:if="${!listaClientesDTO.isEmpty()}">
 			<h2>Mantenimiento de Clientes</h2>
-			<table border="1">
+			<table>
 				<thead>
 					<tr>
 						<th>id</th>
@@ -26,17 +27,17 @@
 				</thead>
 				<tbody>
 					<tr th:each="item:${listaClientesDTO}">
-						<td><a th:href="@{/clientes/{idCliente}(idCliente=${item.id})}" th:text="${item.id}" /></td>
+						<td><a th:href="@{/clientes/{idCliente}(idCliente=${item.id})}" th:text="${item.id}" class="id"/></td>
 						<td th:text="${item.nombre}" />
 						<td th:text="${item.apellidos}" />
 						<td th:text="${item.nif}" />
 						<td th:text="${item.email}" />
 						<td>
-							<a th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}">
+							<a th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}" class="edit">
 								Editar</a>
 						</td>
 						<td>
-							<a th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}">
+							<a th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}" class="delete">
 								Eliminar</a>
 						</td>
 					</tr>
@@ -46,9 +47,9 @@
 	</div>
 	<br>
 	<div>
-		<a th:href="@{/clientes/add}">Agregar</a>
+		<a th:href="@{/clientes/add}" class="add">Agregar</a>
 		<br>
-		<a th:href="@{/}">Volver al inicio</a>
+		<a th:href="@{/}" class="back">Volver al inicio</a>
 	</div>
 </body>
 
