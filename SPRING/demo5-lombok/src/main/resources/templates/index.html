@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{./css/style.css}" />
     <title th:text="${titulo}"></title>
 </head>
 <body>
@@ -9,6 +10,8 @@
 	<br> 
 	<a th:href="@{/clientes}"> Gestión de clientes</a>
 	<br> <br> 
-	<p th:utext="${nombreAsignatura}"/>
+	<footer>
+		<p th:utext="${nombreAsignatura}"/>
+	</footer>
 </body>
 </html>
