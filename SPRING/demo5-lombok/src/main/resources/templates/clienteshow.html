@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
     <title>Visualiza cliente</title>
 </head>
 <body>
@@ -10,37 +11,30 @@
 	<table>
 		<tr>
 			<td>id</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.id}"></td>
 		</tr>
 		<tr>
 			<td>Nombre</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.nombre}"></td>
 		</tr>
 		<tr>
 			<td>Apellidos</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.apellidos}"></td>
 		</tr>
 		<tr>
 			<td>NIF</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.nif}"></td>
 		</tr>
 		<tr>
 			<td>Correo electrónico</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.email}"></td>
 		</tr>
 		<tr>
 			<td>Clave seguridad</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.claveSeguridad}"></td>
 		</tr>
 		<tr>
 			<td>Recomendación</td>
-			<td>:</td>
 			<td th:text="${clienteDTO.recomendacionDTO.observaciones}"></td>
 		</tr>
 	</table>
