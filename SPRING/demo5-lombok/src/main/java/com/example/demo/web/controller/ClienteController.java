@@ -1,6 +1,7 @@
 package com.example.demo.web.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,12 @@ public class ClienteController {
 		log.info("ClienteController- findAll : Mostramos todos los clientes");
 		
 		ModelAndView mav = new ModelAndView("clientes");
-		//the service layer is missing
 		List<ClienteDTO> listaClientesDTO = clienteService.findAll();
 		mav.addObject("listaClientesDTO", listaClientesDTO);
 		
 		return mav;
+		
+
 	}
 	
 	//Display customer information
@@ -69,6 +71,7 @@ public class ClienteController {
 	//Saving clients
 	@PostMapping("/clientes/save")
 	public ModelAndView save(@ModelAttribute("clienteDTO") ClienteDTO clienteDTO) {
+		//log.info(ClienteController.class.getSimpleName())
 		log.info("ClienteController- save : salvamos los datos del cliente: "+ clienteDTO.toString());
 		
 		//call service layer in order to save the client
