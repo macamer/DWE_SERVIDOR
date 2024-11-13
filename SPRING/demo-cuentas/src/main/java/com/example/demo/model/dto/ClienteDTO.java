@@ -1,7 +1,8 @@
 package com.example.demo.model.dto;
 
 import java.io.Serializable;
-
+import java.util.List;
+import java.util.ArrayList;
 import com.example.demo.repository.entity.Cliente;
 
 import lombok.Data;
@@ -17,6 +18,7 @@ public class ClienteDTO implements Serializable{
 	private String claveSeguridad;
 	private String email;
 	private RecomendacionDTO recomendacionDTO;
+	private List<CuentaDTO> listaCuentasDTO;
 
 	//Convierte una entidad a un objeto DTO
 	public static ClienteDTO convertToDTO(Cliente cliente) {
@@ -56,5 +58,6 @@ public class ClienteDTO implements Serializable{
 	public ClienteDTO() {
 		super();
 		this.recomendacionDTO = new RecomendacionDTO();
+		this.listaCuentasDTO = new ArrayList<CuentaDTO>();
 	}	
 }
