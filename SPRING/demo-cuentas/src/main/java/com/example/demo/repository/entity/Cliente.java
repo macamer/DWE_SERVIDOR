@@ -1,5 +1,7 @@
 package com.example.demo.repository.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import lombok.Data;
@@ -14,6 +16,8 @@ public class Cliente {
 	private String claveSeguridad;
 	private String email;
 	private Recomendacion recomendacion;
+	
+	private List<Cuenta> listaCuentas;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -30,6 +34,12 @@ public class Cliente {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	public Cliente() {
+		super();
+		this.recomendacion = new Recomendacion();
+		this.listaCuentas = new ArrayList<Cuenta>();
 	}
 	
 
