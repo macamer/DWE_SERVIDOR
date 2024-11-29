@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Mantenimiento de clientes</title>
 </head>
+
 <body>
 	<div>
 		<br>
@@ -20,21 +22,19 @@
 						<td>Correo electrónico</td>
 						<td>Editar</td>
 						<td>Eliminar</td>
+						<td>Cuentas</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="item : ${listaClientesDTO}">
-						<td><a
-							th:href="@{/clientes/{idCliente}(idCliente=${item.id})}"
-							th:text="${item.id}"></a></td>
+						<td><a th:href="@{/clientes/{idCliente}(idCliente=${item.id})}" th:text="${item.id}"></a></td>
 						<td th:text="${item.nombre}" />
 						<td th:text="${item.apellidos}" />
 						<td th:text="${item.nif}" />
 						<td th:text="${item.email}" />
-						<td><a
-							th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}" />Editar</a></td>
-						<td><a
-							th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}" />Eliminar</a></td>
+						<td><a th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}" />Editar</a></td>
+						<td><a th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}" />Eliminar</a></td>
+						<td><a th:href="@{/clientes/{idCliente}/cuentas(idCliente=${item.id})}" />Cuentas</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -42,9 +42,10 @@
 	</div>
 	<br>
 	<div>
-		<a th:href="@{/clientes/add}">Agregar</a> 
-    <br> 
-    <a th:href="@{/}">Volver al inicio</a>
+		<a th:href="@{/clientes/add}">Agregar</a>
+		<br>
+		<a th:href="@{/}">Volver al inicio</a>
 	</div>
 </body>
+
 </html>
