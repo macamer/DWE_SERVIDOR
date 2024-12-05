@@ -2,20 +2,44 @@ package com.example.demo.repository.entity;
 
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
-@Data //is part of lambok, makes mapping easier 
+@Data 
+@Entity
+@Table(name="clientes")
 public class Cliente {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name="nif")
 	private String nif;
+	
+	@Column(name="nombre")
 	private String nombre;
+	
 	private String apellidos;
+	
+	@Column(name="claveseguridad")
 	private String claveSeguridad;
+	
 	private String email;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
+	@ToString.Exclude
 	private Recomendacion recomendacion;
 	
-	//we only want to check if the id is the same, so we override the method
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -27,6 +51,7 @@ public class Cliente {
 		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
