@@ -2,13 +2,15 @@ package com.example.demo.repository.dao;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.repository.entity.Cliente;
 
-public interface ClienteRepository {
+import jakarta.transaction.Transactional;
 
-	List<Cliente> findAll();
-	Cliente findById(Cliente cliente);
-	void save(Cliente cliente);
-	void delete(Cliente cliente);
+@Repository
+@Transactional
+public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 }
