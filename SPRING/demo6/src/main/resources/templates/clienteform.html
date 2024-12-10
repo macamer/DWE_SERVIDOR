@@ -13,7 +13,7 @@
 	<br>
 	<form th:action="@{/clientes/save}" th:object="${clienteDTO}" method="POST">
 		<table>
-			<tr>
+			<tr th:if=${clienteDTO.id}>
 				<td>id</td>
 				<td><input type=text th:field="*{id}" readonly></td>
 			</tr>
@@ -41,6 +41,8 @@
 				<td>Recomendación</td>
 				<td><input type=text th:field="*{recomendacionDTO.observaciones}"></td>
 			</tr>
+			<!-- Ocultamos el id de la recomendación del cliente -->
+			<input type="hidden" th:field="*{recomendacionDTO.id}">
 		</table>
 		<input type="submit" th:value="${add}?'Nuevo':'Actualizar'">
 	</form>
