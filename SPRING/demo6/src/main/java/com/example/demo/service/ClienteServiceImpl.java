@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -26,14 +27,6 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<ClienteDTO> findAll() {
 		
 		log.info("ClienteServiceImpl - findAll: Lista de todos los clientes");
-		/*
-		List<ClienteDTO> listaClientesDTO = new ArrayList<ClienteDTO>();
-		List<Cliente> listaClientes = clienteRepository.findAll();
-		for(int i=0; i<listaClientes.size(); i++) {
-			Cliente cliente = listaClientes.get(i);
-			ClienteDTO clienteDTO = ClienteDTO.convertToDTO(cliente);
-			listaClientesDTO.add(clienteDTO);
-		}*/
 		
 		List<ClienteDTO> listaClientesDTO = clienteRepository.findAll()
 				.stream()
@@ -47,13 +40,10 @@ public class ClienteServiceImpl implements ClienteService {
 	public ClienteDTO findById(ClienteDTO clienteDTO) {
 		log.info("ClienteServiceImpl - findById: Buscar Cliente por ID: " + clienteDTO.getId());
 		
-		Cliente cliente = new Cliente();
-		cliente.setId(clienteDTO.getId());
+		Optional<Cliente> cliente = clienteRepository.findById(clienteDTO.getId());
 		
-		cliente = clienteRepository.findById(cliente);
-		
-		if(cliente!=null) {
-			clienteDTO = ClienteDTO.convertToDTO(cliente);
+		if(cliente.isPresent()) {
+			clienteDTO = ClienteDTO.convertToDTO(cliente.get());
 			return clienteDTO;
 		} else {
 			return null;
@@ -74,7 +64,6 @@ public class ClienteServiceImpl implements ClienteService {
 		
 		Cliente cliente = new Cliente();
 		cliente.setId(clienteDTO.getId());
-		//repository is missing
 		clienteRepository.delete(cliente);	
 	}
 
