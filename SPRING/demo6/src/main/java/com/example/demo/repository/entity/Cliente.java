@@ -1,5 +1,6 @@
 package com.example.demo.repository.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
@@ -39,6 +40,8 @@ public class Cliente {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cliente")
 	@ToString.Exclude
 	private Recomendacion recomendacion;
+	
+	private List<Cuenta> listaCuentas;
 	
 	@Override
 	public boolean equals(Object obj) {
