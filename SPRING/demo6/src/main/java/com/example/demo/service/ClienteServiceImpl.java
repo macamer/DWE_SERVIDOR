@@ -54,7 +54,7 @@ public class ClienteServiceImpl implements ClienteService {
 	public void save(ClienteDTO clienteDTO) {
 		log.info("ClienteServiceImpl - save: salvamos el cliente: " + clienteDTO.toString());
 		
-		Cliente cliente = clienteDTO.contertToEntity(clienteDTO);
+		Cliente cliente = clienteDTO.convertToEntity(clienteDTO);
 		clienteRepository.save(cliente);		
 	}
 
