@@ -46,4 +46,42 @@ public class CuentaController {
 		return mav;
 	}
 	
+	@GetMapping("/clientes/{idCliente}/cuentas/delete/{idCuenta}")
+	public ModelAndView delete(@PathVariable("idCliente") Long idCliente, 
+			@PathVariable("idCuenta") Long idCuenta) {
+		log.info("CuentaController - delete: Usamos el metodo 1 para borrar la cuenta:" +
+				idCuenta);
+		
+		//Creamos la cuentaDTO
+		CuentaDTO cuentaDTO = new CuentaDTO();
+		cuentaDTO.setId(idCuenta);
+		
+		//Invocamos al metodo de borrar
+		cuentaService.delete(cuentaDTO);
+		
+		//Redireccionamos para volver a invocar al metodo de escucha /clientes
+		ModelAndView mav = new ModelAndView("redirect:/clientes/{idCliente}/cuentas");
+		return mav;
+	}
+	
+	/*
+	@GetMapping("/clientes/{idCliente}/cuentas/delete/{idCuenta}")
+	public ModelAndView delete(@PathVariable("idCliente") Long idCliente, 
+			@PathVariable("idCuenta") Long idCuenta) {
+		log.info("CuentaController - delete: Usamos el metodo 1 para borrar la cuenta:" +
+				idCuenta);
+		
+		//Creamos la cuentaDTO
+		CuentaDTO cuentaDTO = new CuentaDTO();
+		cuentaDTO.setId(idCuenta);
+		
+		//Invocamos al metodo de borrar
+		cuentaService.delete(cuentaDTO);
+		
+		//Redireccionamos para volver a invocar al metodo de escucha /clientes
+		ModelAndView mav = new ModelAndView("redirect:/clientes/{idCliente}/cuentas");
+		return mav;
+	}*/
+	
+	
 }
