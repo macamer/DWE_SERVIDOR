@@ -40,4 +40,17 @@ public class CuentaServiceImpl implements CuentaService {
 		return listaResultadoDTO;
 	}
 
+	/*
+	* Metodo 1 de borrado de un hijo en una relacion 1 a N:
+	* ejecutamos directamente el borrado por medio del id
+	*/
+	@Override
+	public void delete(CuentaDTO cuentaDTO) {
+		log.info("CuentaServiceImpl - delete: Metodo 1: borramos la cuenta: " +
+				cuentaDTO.toString());
+		
+		cuentaRepository.deleteById(cuentaDTO.getId());
+		
+	}
+
 }

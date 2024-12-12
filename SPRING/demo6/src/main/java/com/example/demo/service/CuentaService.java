@@ -9,4 +9,6 @@ public interface CuentaService {
 
 	List<CuentaDTO> findAllByCliente(ClienteDTO clienteDTO);
 
+	void delete(CuentaDTO cuentaDTO);
+
 }
