@@ -17,12 +17,14 @@
 				<thead>
 					<tr>
 						<th>id</th>
-						<th>Nombre</td>
-						<th>Apellidos</td>
+						<th>Nombre</th>
+						<th>Apellidos</th>
 						<th>NIF</td>
-						<th>Correo electrónico</td>
-						<th>Editar</td>
-						<th>Eliminar</td>
+						<th>Correo electrónico</th>
+						<th>Editar</th>
+						<th>Eliminar</th>
+						<th>Cuentas</th>
+						<th>Direcciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,6 +41,14 @@
 						<td>
 							<a th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}" class="delete">
 								Eliminar</a>
+						</td>
+						<td>
+							<a th:href="@{/clientes/{idCliente}/cuentas(idCliente=${item.id})}" class="edit">
+								Cuentas</a>
+						</td>
+						<td>
+							<a th:href="@{/clientes/{idCliente}/direcciones(idCliente=${item.id})}" class="edit">
+								Direcciones</a>
 						</td>
 					</tr>
 				</tbody>
