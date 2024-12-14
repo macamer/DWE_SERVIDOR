@@ -51,5 +51,12 @@ public class Cuenta {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
+	public int compareTo(Object o) {
+		Cuenta c = (Cuenta)o;
+		if (this.id == c.id)
+			return 0;
+		else
+			return 1;
+	}
 }
