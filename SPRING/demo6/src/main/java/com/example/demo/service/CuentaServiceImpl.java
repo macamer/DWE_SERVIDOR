@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.dto.ClienteDTO;
 import com.example.demo.model.dto.CuentaDTO;
+import com.example.demo.repository.dao.ClienteRepository;
 import com.example.demo.repository.dao.CuentaRepository;
+import com.example.demo.repository.entity.Cliente;
 import com.example.demo.repository.entity.Cuenta;
 
 @Service
@@ -19,6 +22,9 @@ public class CuentaServiceImpl implements CuentaService {
 	
 	@Autowired
 	private CuentaRepository cuentaRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	@Override
 	public List<CuentaDTO> findAllByCliente(ClienteDTO clienteDTO) {
@@ -50,6 +56,27 @@ public class CuentaServiceImpl implements CuentaService {
 				cuentaDTO.toString());
 		
 		cuentaRepository.deleteById(cuentaDTO.getId());
+		
+	}
+
+	@Override
+	public void delete(CuentaDTO cuentaDTO, ClienteDTO clienteDTO) {
+		log.info("CuentaServiceImpl - delete: Metodo 2: borramos la cuenta: " +
+				cuentaDTO.toString());
+		
+		//Localizamos ambos objetos
+		Optional<Cliente> cliente = clienteRepository.findById(clienteDTO.getId());
+		Optional<Cuenta> cuenta = cuentaRepository.findById(cuentaDTO.getId());
+		
+		//Eliminamos la cuenta de la lista de cuentas del cliente.
+		//Con esto eliminamos la relación y podemos borrar la cuenta
+		cliente.get().getListaCuentas().remove(cuenta.get());
+		
+		//Eliminamos la cuenta
+		cuentaRepository.deleteById(cuenta.get().getId());
+		
+		//Salvamos el cliente con la nueva situación
+		clienteRepository.save(cliente.get());
 		
 	}
 

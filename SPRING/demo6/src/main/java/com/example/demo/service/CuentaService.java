@@ -11,4 +11,6 @@ public interface CuentaService {
 
 	void delete(CuentaDTO cuentaDTO);
 
+	void delete(CuentaDTO cuentaDTO, ClienteDTO clienteDTO);
+
 }
