@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import com.example.demo.repository.entity.Cliente;
 import com.example.demo.repository.entity.Cuenta;
+import com.example.demo.repository.entity.Direccion;
 import com.example.demo.repository.entity.Recomendacion;
 
 //serialize the class, so it can be sent to web
@@ -27,6 +28,8 @@ public class ClienteDTO implements Serializable {
 
 	@ToString.Exclude
 	private List<CuentaDTO> listaCuentasDTO;
+	@ToString.Exclude
+	private List<DireccionDTO> listaDireccionesDTO;
 
 	// convert a entity to a DTO
 	public static ClienteDTO convertToDTO(Cliente cliente) {
@@ -46,6 +49,12 @@ public class ClienteDTO implements Serializable {
 		for (int i = 0; i < cliente.getListaCuentas().size(); i++) {
 			CuentaDTO cuentadto = CuentaDTO.convertToDTO(cliente.getListaCuentas().get(i), clienteDTO);
 			clienteDTO.getListaCuentasDTO().add(cuentadto);
+		}
+		
+		// Cargamos la lista de direcciones
+		for(int i=0; i<cliente.getListaDirecciones().size(); i++) {
+			DireccionDTO direcciondto = DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
+			clienteDTO.getListaDireccionesDTO().add(direcciondto);
 		}
 
 		return clienteDTO;
@@ -69,6 +78,12 @@ public class ClienteDTO implements Serializable {
 			Cuenta cuenta = CuentaDTO.convertToEntity(clienteDTO.getListaCuentasDTO().get(i));
 			cliente.getListaCuentas().add(cuenta);
 		}
+		
+		// Cargamos la lista de direcciones
+		for(int i=0; i<clienteDTO.getListaDireccionesDTO().size(); i++) {
+			Direccion direccion = DireccionDTO.convertToEntity(clienteDTO.getListaDireccionesDTO().get(i), cliente);
+			cliente.getListaDirecciones().add(direccion);
+		}
 
 		return cliente;
 	}
@@ -78,6 +93,7 @@ public class ClienteDTO implements Serializable {
 		super();
 		this.recomendacionDTO = new RecomendacionDTO();
 		this.listaCuentasDTO= new ArrayList<CuentaDTO>();
+		this.listaDireccionesDTO = new ArrayList<DireccionDTO>();
 	}
 
 }
