@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<title>Mantenimiento de direcciones</title>
+</head>
+
+<body>
+	<div>
+		<br>
+		<h2 th:if="${listaDireccionesDTO.isEmpty()}">No hay direcciones para el cliente
+			<td th:utext="${clienteDTO.nombre}"></td><td th:utext="${clienteDTO.apellidos}"></td>
+		</h2>
+		<div th:if="${!listaDireccionesDTO.isEmpty()}">
+			<h2>
+				Mantenimiento de Direcciones del Cliente: 
+				<strong th:text="${clienteDTO.nombre}">Nombre</strong>
+				<strong th:text="${clienteDTO.apellidos}">Nombre</strong>
+			</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Direccion</th>
+						<th>País</th>
+						<th>CP</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item:${listaDireccionesDTO}">
+						<td th:text="${item.id}" />
+						<td th:text="${item.descripcion}" />
+						<td th:text="${item.pais}" />
+						<td th:text="${item.cp}" />
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br>
+	<div>
+		<a th:href="@{/clientes/{idCliente}/direcciones/add(idCliente=${clienteDTO.id})}" class="add">Nueva Dirección</a> 
+		<br> 
+		<a th:href="@{/clientes}" class="back">Volver a la lista de clientes</a>
+	</div>
+</body>
+
+</html>
