@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.dto.ClienteDTO;
 import com.example.demo.model.dto.DireccionDTO;
 import com.example.demo.repository.dao.ClienteRepository;
+import com.example.demo.repository.dao.DireccionRepository;
+import com.example.demo.repository.entity.Cliente;
 import com.example.demo.repository.entity.Direccion;
 
 @Service
@@ -40,7 +43,19 @@ public class DireccionServiceImpl implements DireccionService {
 
 	@Override
 	public void save(DireccionDTO direccionDTO) {
-		// TODO Auto-generated method stub
+		log.info("DireccionServiceImpl - save: Guarda la direccion del cliente: "
+				+ direccionDTO.getListaClientesDTO().get(0).getId());
+		
+		//Solo hay un clienteDTO en la direccion
+		Optional<Cliente> cliente = clienteRepository.findById(direccionDTO.getListaClientesDTO().get(0).getId());
+		
+		if(cliente.isPresent()) {
+			//creamos las relaciones en las entidades
+			Direccion direccion = DireccionDTO.convertToEntity(direccionDTO, cliente.get());
+			cliente.get().getListaDirecciones().add(direccion);
+			//Almacenamos la direccion, y por la relacion que tiene, almacenará la relación N a N
+			direccionRepository.save(direccion);
+		}
 		
 	}
 
