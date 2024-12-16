@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.dto.ClienteDTO;
@@ -40,12 +41,12 @@ public class DireccionController {
 		
 		//Pasamos los datos al modelo
 		ModelAndView mav = new ModelAndView("direcciones");
-		mav.addObject("listaDireccionesDTO", clienteDTO);
+		mav.addObject("listaDireccionesDTO", listaDireccionesDTO);
 		mav.addObject("clienteDTO", clienteDTO);
 		return mav;
 	}
 	
-	@GetMapping("/clientes/{idCliente}/direccionnes/add")
+	@GetMapping("/clientes/{idCliente}/direcciones/add")
 	public ModelAndView add(@PathVariable Long idCliente) {
 		log.info("DireccionController - add: Anyadimos una nueva direccion al cliente: "
 				+ idCliente);
@@ -60,7 +61,7 @@ public class DireccionController {
 		return mav;
 	}
 	
-	@GetMapping("/clientes/{idCliente}/direcciones/save")
+	@PostMapping("/clientes/{idCliente}/direcciones/save")
 	public ModelAndView save(@PathVariable Long idCliente, @ModelAttribute("direccionDTO") DireccionDTO direccionDTO) {
 		log.info("DireccionController - save: Almacenamos la direccion " +
 				direccionDTO.toString());
