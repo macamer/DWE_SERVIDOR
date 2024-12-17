@@ -1,8 +1,10 @@
 package com.example.demo.repository.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -26,13 +28,19 @@ public class Direccion {
 	private String pais;
 	private String cp;
 	
+//	Mapeo de Direcciones con List 
+//	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "listaDirecciones")
+//	@ToString.Exclude
+//	private List<Cliente> listaClientes;
+	
 	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "listaDirecciones")
 	@ToString.Exclude
-	private List<Cliente> listaClientes;
+	private Set<Cliente> listaClientes;
 	
 	public Direccion() {
 		super();
-		this.listaClientes = new ArrayList<Cliente>();
+//		this.listaClientes = new ArrayList<Cliente>();
+		this.listaClientes = new HashSet<Cliente>();
 	}
 
 	@Override
