@@ -1,8 +1,10 @@
 package com.example.demo.repository.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,21 +48,40 @@ public class Cliente {
 	@ToString.Exclude
 	private Recomendacion recomendacion;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
-	private List<Cuenta> listaCuentas;
+//	Mapeo de la lista de cuentas con List
+//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="cliente")
+//	private List<Cuenta> listaCuentas;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	//tabla que mantiene la relacion N-N
+	//Mapeo de la lista de cuentas con Set
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="cliente")
+	@ToString.Exclude
+	private Set<Cuenta> listaCuentas;
+	
+//	Mapeo de la lista de direcciones con List
+//	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+//	//tabla que mantiene la relacion N-N
+//	@JoinTable (
+//			//Nombre de la tabla
+//			name = "clientesdirecciones",
+//			//columna que almacena el id de cleinte en la tabla clientesdirecciones
+//			joinColumns = @JoinColumn(name = "idcliente"),
+//			//columna que almacena el id de la direccion en la tabla clientesdirecciones
+//			inverseJoinColumns = @JoinColumn (name = "iddireccion")
+//			)
+//	@ToString.Exclude
+//	private List<Direccion> listaDirecciones;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	//Tabla que mantiene la relacion N-N
 	@JoinTable (
-			//Nombre de la tabla
-			name = "clientesdirecciones",
-			//columna que almacena el id de cleinte en la tabla clientesdirecciones
+			name="clientesdirecciones",
+			//columna que almacena el id de cliente en la tabla clientesdirecciones
 			joinColumns = @JoinColumn(name = "idcliente"),
 			//columna que almacena el id de la direccion en la tabla clientesdirecciones
-			inverseJoinColumns = @JoinColumn (name = "iddireccion")
+			inverseJoinColumns = @JoinColumn(name="iddireccion")
 			)
 	@ToString.Exclude
-	private List<Direccion> listaDirecciones;
+	private Set<Direccion> listaDirecciones;
 		
 	@Override
 	public boolean equals(Object obj) {
@@ -82,8 +103,10 @@ public class Cliente {
 	public Cliente() {
 		super();
 		this.recomendacion = new Recomendacion();
-		this.listaCuentas = new ArrayList<Cuenta>();
-		this.listaDirecciones = new ArrayList<Direccion>();
+//		this.listaCuentas = new ArrayList<Cuenta>();
+//		this.listaDirecciones = new ArrayList<Direccion>();
+		this.listaCuentas = new HashSet<Cuenta>();
+		this.listaDirecciones = new HashSet<Direccion>();
 	}
 	
 }
