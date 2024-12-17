@@ -45,15 +45,19 @@ public class ClienteDTO implements Serializable {
 		RecomendacionDTO rec = RecomendacionDTO.convertToDTO(cliente.getRecomendacion(), clienteDTO); // convert to DTO
 		clienteDTO.setRecomendacionDTO(rec);
 
-		// Cargamos la lista de cuentas
+		// Cargamos la lista de cuentas, que como es un Hashset hemos de convertir a ArrayList
+		List<Cuenta> listaCuentas = new ArrayList<Cuenta>(cliente.getListaCuentas());
 		for (int i = 0; i < cliente.getListaCuentas().size(); i++) {
-			CuentaDTO cuentadto = CuentaDTO.convertToDTO(cliente.getListaCuentas().get(i), clienteDTO);
+			//CuentaDTO cuentadto = CuentaDTO.convertToDTO(cliente.getListaCuentas().get(i), clienteDTO);
+			CuentaDTO cuentadto = CuentaDTO.convertToDTO(listaCuentas.get(i), clienteDTO);
 			clienteDTO.getListaCuentasDTO().add(cuentadto);
 		}
 		
-		// Cargamos la lista de direcciones
+		// Cargamos la lista de direcciones, que como es un Hashset hemos de convertir a ArrayList
+		List<Direccion> listaDirecciones = new ArrayList<Direccion>(cliente.getListaDirecciones());
 		for(int i=0; i<cliente.getListaDirecciones().size(); i++) {
-			DireccionDTO direcciondto = DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
+			//DireccionDTO direcciondto = DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
+			DireccionDTO direcciondto = DireccionDTO.convertToDTO(listaDirecciones.get(i), clienteDTO);
 			clienteDTO.getListaDireccionesDTO().add(direcciondto);
 		}
 
