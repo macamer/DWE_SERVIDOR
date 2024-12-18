@@ -2,7 +2,11 @@ package com.example.demo.model.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 import lombok.ToString;
@@ -29,8 +33,14 @@ public class ClienteDTO implements Serializable {
 
 	@ToString.Exclude
 	private List<CuentaDTO> listaCuentasDTO;
+//	@ToString.Exclude
+//	private List<DireccionDTO> listaDireccionesDTO;
+
 	@ToString.Exclude
-	private List<DireccionDTO> listaDireccionesDTO;
+	private List<ClienteDireccionDTO> listaClientesDireccionesDTO;
+
+	@DateTimeFormat(iso = ISO.DATE)
+	private Date fechaNacimiento;
 
 	// convert a entity to a DTO
 	public static ClienteDTO convertToDTO(Cliente cliente) {
@@ -42,32 +52,42 @@ public class ClienteDTO implements Serializable {
 		clienteDTO.setApellidos(cliente.getApellidos());
 		clienteDTO.setClaveSeguridad(cliente.getClaveSeguridad());
 		clienteDTO.setEmail(cliente.getEmail());
+		clienteDTO.setFechaNacimiento(cliente.getFechaNacimiento());
 
 		RecomendacionDTO rec = RecomendacionDTO.convertToDTO(cliente.getRecomendacion(), clienteDTO); // convert to DTO
 		clienteDTO.setRecomendacionDTO(rec);
 
-		// Cargamos la lista de cuentas, que como es un Hashset hemos de convertir a ArrayList
+		// Cargamos la lista de cuentas, que como es un Hashset hemos de convertir a
+		// ArrayList
 		List<Cuenta> listaCuentas = new ArrayList<Cuenta>(cliente.getListaCuentas());
 		for (int i = 0; i < cliente.getListaCuentas().size(); i++) {
-			//CuentaDTO cuentadto = CuentaDTO.convertToDTO(cliente.getListaCuentas().get(i), clienteDTO);
+			// CuentaDTO cuentadto =
+			// CuentaDTO.convertToDTO(cliente.getListaCuentas().get(i), clienteDTO);
 			CuentaDTO cuentadto = CuentaDTO.convertToDTO(listaCuentas.get(i), clienteDTO);
 			clienteDTO.getListaCuentasDTO().add(cuentadto);
 		}
-		
-		// Cargamos la lista de direcciones, que como es un Hashset hemos de convertir a ArrayList
+
+		// Cargamos la lista de direcciones, que como es un Hashset hemos de convertir a
+		// ArrayList
 		/*
-		List<Direccion> listaDirecciones = new ArrayList<Direccion>(cliente.getListaDirecciones());
-		for(int i=0; i<cliente.getListaDirecciones().size(); i++) {
-			//DireccionDTO direcciondto = DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
-			DireccionDTO direcciondto = DireccionDTO.convertToDTO(listaDirecciones.get(i), clienteDTO);
-			clienteDTO.getListaDireccionesDTO().add(direcciondto);
-		}*/
-		
-		List<ClienteDireccion> listaClientesDirecciones = new ArrayList<ClienteDireccion>(cliente.getListaClientesDirecciones());
-		for(int i=0; i<cliente.getListaClientesDirecciones().size(); i++) {
-			// Como solo nos interesa la direccion la lista que tenemos sera la lista de direccionesDTO
-			DireccionDTO direcciondto = DireccionDTO.convertToDTO(listaClientesDirecciones.get(i).getDireccion(), clienteDTO);
-			clienteDTO.getListaDireccionesDTO().add(direcciondto);
+		 * List<Direccion> listaDirecciones = new
+		 * ArrayList<Direccion>(cliente.getListaDirecciones()); for(int i=0;
+		 * i<cliente.getListaDirecciones().size(); i++) { //DireccionDTO direcciondto =
+		 * DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
+		 * DireccionDTO direcciondto =
+		 * DireccionDTO.convertToDTO(listaDirecciones.get(i), clienteDTO);
+		 * clienteDTO.getListaDireccionesDTO().add(direcciondto); }
+		 */
+
+		List<ClienteDireccion> listaClientesDirecciones = new ArrayList<ClienteDireccion>(
+				cliente.getListaClientesDirecciones());
+		for (int i = 0; i < cliente.getListaClientesDirecciones().size(); i++) {
+			ClienteDireccionDTO clienteDireccionDTO = new ClienteDireccionDTO();
+			clienteDireccionDTO.setClienteDTO(clienteDTO);
+			clienteDireccionDTO.setDireccionDTO(
+					DireccionDTO.convertToDTO(listaClientesDirecciones.get(i).getDireccion(), clienteDTO));
+			clienteDireccionDTO.setFechaAlta(listaClientesDirecciones.get(i).getFechaAlta());
+			clienteDTO.getListaClientesDireccionesDTO().add(clienteDireccionDTO);
 		}
 
 		return clienteDTO;
@@ -82,6 +102,7 @@ public class ClienteDTO implements Serializable {
 		cliente.setApellidos(clienteDTO.getApellidos());
 		cliente.setClaveSeguridad(clienteDTO.getClaveSeguridad());
 		cliente.setEmail(clienteDTO.getEmail());
+		cliente.setFechaNacimiento(clienteDTO.getFechaNacimiento());
 
 		Recomendacion rec = RecomendacionDTO.convertToEntity(clienteDTO.getRecomendacionDTO(), cliente);
 		cliente.setRecomendacion(rec);
@@ -91,13 +112,24 @@ public class ClienteDTO implements Serializable {
 			Cuenta cuenta = CuentaDTO.convertToEntity(clienteDTO.getListaCuentasDTO().get(i));
 			cliente.getListaCuentas().add(cuenta);
 		}
-		
+
 		// Cargamos la lista de direcciones
-		for(int i=0; i<clienteDTO.getListaDireccionesDTO().size(); i++) {
-			Direccion direccion = DireccionDTO.convertToEntity(clienteDTO.getListaDireccionesDTO().get(i), cliente);
+		/*
+		 * for(int i=0; i<clienteDTO.getListaDireccionesDTO().size(); i++) { Direccion
+		 * direccion =
+		 * DireccionDTO.convertToEntity(clienteDTO.getListaDireccionesDTO().get(i),
+		 * cliente); ClienteDireccion cd = new ClienteDireccion();
+		 * cd.setCliente(cliente); cd.setDireccion(direccion);
+		 * cliente.getListaClientesDirecciones().add(cd); }
+		 */
+
+		// Cargamos la lista de ClientesDireccionesDTO
+		for (int i = 0; i < clienteDTO.getListaClientesDireccionesDTO().size(); i++) {
 			ClienteDireccion cd = new ClienteDireccion();
+			cd.setId(clienteDTO.getListaClientesDireccionesDTO().get(i).getId());
 			cd.setCliente(cliente);
-			cd.setDireccion(direccion);
+			cd.setDireccion(DireccionDTO.convertToEntity(clienteDTO.getListaClientesDireccionesDTO().get(i).getDireccionDTO(), cliente));
+			cd.setFechaAlta(clienteDTO.getListaClientesDireccionesDTO().get(i).getFechaAlta());
 			cliente.getListaClientesDirecciones().add(cd);
 		}
 
@@ -108,8 +140,9 @@ public class ClienteDTO implements Serializable {
 	public ClienteDTO() {
 		super();
 		this.recomendacionDTO = new RecomendacionDTO();
-		this.listaCuentasDTO= new ArrayList<CuentaDTO>();
-		this.listaDireccionesDTO = new ArrayList<DireccionDTO>();
+		this.listaCuentasDTO = new ArrayList<CuentaDTO>();
+		//this.listaDireccionesDTO = new ArrayList<DireccionDTO>();
+		this.listaClientesDireccionesDTO = new ArrayList<ClienteDireccionDTO>();
 	}
 
 }
