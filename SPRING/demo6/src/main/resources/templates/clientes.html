@@ -21,6 +21,7 @@
 						<th>Apellidos</th>
 						<th>NIF</td>
 						<th>Correo electrónico</th>
+						<th>Fecha nacimiento</th>
 						<th>Editar</th>
 						<th>Eliminar</th>
 						<th>Cuentas</th>
@@ -34,6 +35,7 @@
 						<td th:text="${item.apellidos}" />
 						<td th:text="${item.nif}" />
 						<td th:text="${item.email}" />
+						<td th:text="${#dates.format(item.fechaNacimiento, 'dd/MM/yyyy')}"/>
 						<td>
 							<a th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}" class="edit">
 								Editar</a>

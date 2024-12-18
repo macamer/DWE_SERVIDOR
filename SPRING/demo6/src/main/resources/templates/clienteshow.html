@@ -30,6 +30,10 @@
 			<td th:text="${clienteDTO.email}"></td>
 		</tr>
 		<tr>
+			<td>Fecha Nacimiento</td>
+			<td th:text="${#dates.format(clienteDTO.fechaNacimiento, 'dd/MM/yyyy')}"></td>
+		</tr>
+		<tr>
 			<td>Clave seguridad</td>
 			<td th:text="${clienteDTO.claveSeguridad}"></td>
 		</tr>
