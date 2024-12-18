@@ -1,6 +1,7 @@
 package com.example.demo.repository.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -90,6 +93,11 @@ public class Cliente {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
 	@ToString.Exclude
 	private Set<ClienteDireccion> listaClientesDirecciones;
+	
+	//Atributo que almacena la fecha de nacimiento
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fechanacimiento")
+	private Date fechaNacimiento;
 		
 	@Override
 	public boolean equals(Object obj) {
