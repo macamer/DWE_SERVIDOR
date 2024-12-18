@@ -71,6 +71,7 @@ public class Cliente {
 //	@ToString.Exclude
 //	private List<Direccion> listaDirecciones;
 	
+	/*
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	//Tabla que mantiene la relacion N-N
 	@JoinTable (
@@ -82,6 +83,13 @@ public class Cliente {
 			)
 	@ToString.Exclude
 	private Set<Direccion> listaDirecciones;
+	*/
+	
+	// Mapeo con la entidad ClienteDireccion con Set
+	// IMPORTANTE: Poner a LAZY la relacion en este caso, ya que es la relacion N a N
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
+	@ToString.Exclude
+	private Set<ClienteDireccion> listaClientesDirecciones;
 		
 	@Override
 	public boolean equals(Object obj) {
@@ -106,7 +114,8 @@ public class Cliente {
 //		this.listaCuentas = new ArrayList<Cuenta>();
 //		this.listaDirecciones = new ArrayList<Direccion>();
 		this.listaCuentas = new HashSet<Cuenta>();
-		this.listaDirecciones = new HashSet<Direccion>();
+		//this.listaDirecciones = new HashSet<Direccion>();
+		this.listaClientesDirecciones = new HashSet<ClienteDireccion>();
 	}
 	
 }

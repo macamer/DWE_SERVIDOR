@@ -8,10 +8,12 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.ToString;
@@ -33,14 +35,23 @@ public class Direccion {
 //	@ToString.Exclude
 //	private List<Cliente> listaClientes;
 	
+	/*
 	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "listaDirecciones")
 	@ToString.Exclude
 	private Set<Cliente> listaClientes;
+	*/
+	
+	// Mapeo con la entidad ClienteDireccion con Set
+	// IMPORTANTE: Poner a LAZY la relacion en este caso, ya que es la relacion N a N
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "direccion")
+	@ToString.Exclude
+	private Set<ClienteDireccion> listaClientesDirecciones;
 	
 	public Direccion() {
 		super();
 //		this.listaClientes = new ArrayList<Cliente>();
-		this.listaClientes = new HashSet<Cliente>();
+//		this.listaClientes = new HashSet<Cliente>();
+		this.listaClientesDirecciones = new HashSet<ClienteDireccion>();
 	}
 
 	@Override
