@@ -28,6 +28,10 @@ public class DireccionDTO implements Serializable{
 		direccionDTO.setDescripcion(direccion.getDescripcion());
 		direccionDTO.setPais(direccion.getPais());
 		direccionDTO.setCp(direccion.getCp());
+		
+		// No tiene sentido mapear todos los clientes que tiene la direccion, puesto que
+		// al mapear cada cliente volveriamos a mapear sus direcciones, y así
+		// sucesivamente.
 		direccionDTO.getListaClientesDTO().add(clienteDTO);
 		
 		return direccionDTO;
