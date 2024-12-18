@@ -10,10 +10,10 @@
 <body>
 	<div>
 		<br>
-		<h2 th:if="${listaDireccionesDTO.isEmpty()}">No hay direcciones para el cliente
+		<h2 th:if="${listaClientesDireccionesDTO.isEmpty()}">No hay direcciones para el cliente
 			<td th:utext="${clienteDTO.nombre}"></td><td th:utext="${clienteDTO.apellidos}"></td>
 		</h2>
-		<div th:if="${!listaDireccionesDTO.isEmpty()}">
+		<div th:if="${!listaClientesDireccionesDTO.isEmpty()}">
 			<h2>
 				Mantenimiento de Direcciones del Cliente: 
 				<strong th:text="${clienteDTO.nombre}">Nombre</strong>
@@ -26,14 +26,17 @@
 						<th>Direccion</th>
 						<th>País</th>
 						<th>CP</th>
+						<th>Fecha Alta</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="item:${listaDireccionesDTO}">
-						<td th:text="${item.id}" />
-						<td th:text="${item.descripcion}" />
-						<td th:text="${item.pais}" />
-						<td th:text="${item.cp}" />
+					<tr th:each="item:${listaClientesDireccionesDTO}">
+						<td th:text="${item.direccionDTO.id}" />
+						<td th:text="${item.direccionDTO.descripcion}" />
+						<td th:text="${item.direccionDTO.pais}" />
+						<td th:text="${item.direccionDTO.cp}" />
+						<!-- formateamos la fecha para verla en formato correcto y quitamos los segundos y milisegundos -->
+						<td th:text="${#dates.format(item.fechaAlta, 'dd-MM-yyyy HH:mm')}">...</td>
 					</tr>
 				</tbody>
 			</table>
