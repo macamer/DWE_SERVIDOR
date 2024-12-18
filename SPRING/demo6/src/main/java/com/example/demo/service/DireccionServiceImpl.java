@@ -14,6 +14,7 @@ import com.example.demo.model.dto.DireccionDTO;
 import com.example.demo.repository.dao.ClienteRepository;
 import com.example.demo.repository.dao.DireccionRepository;
 import com.example.demo.repository.entity.Cliente;
+import com.example.demo.repository.entity.ClienteDireccion;
 import com.example.demo.repository.entity.Direccion;
 
 @Service
@@ -45,7 +46,7 @@ public class DireccionServiceImpl implements DireccionService {
 	public void save(DireccionDTO direccionDTO) {
 		log.info("DireccionServiceImpl - save: Guarda la direccion del cliente: "
 				+ direccionDTO.getListaClientesDTO().get(0).getId());
-		
+		/* Opcion 1
 		//Solo hay un clienteDTO en la direccion
 		Optional<Cliente> cliente = clienteRepository.findById(direccionDTO.getListaClientesDTO().get(0).getId());
 		
@@ -55,6 +56,20 @@ public class DireccionServiceImpl implements DireccionService {
 			cliente.get().getListaDirecciones().add(direccion);
 			//Almacenamos la direccion, y por la relacion que tiene, almacenará la relación N a N
 			direccionRepository.save(direccion);
+		}
+		*/
+		
+		//Solo hay un clienteDTO en la direccionDTO. En este caso tendremos que crear la entidad
+		//ClienteDireccion y asignar las relaciones
+		Optional<Cliente> cliente = clienteRepository.findById(direccionDTO.getListaClientesDTO().get(0).getId());
+		if (cliente.isPresent()) {
+			//creamos las relaciones en las entidades
+			Direccion direccion = DireccionDTO.convertToEntity(direccionDTO, cliente.get());
+			ClienteDireccion cd = new ClienteDireccion();
+			cd.setDireccion(direccion);
+			cd.setCliente(cliente.get());
+			//Almacenamos la direccion, y por la relacion que tiene, almacenará la relacion N a N
+			direccionRepository.save(direccion);	
 		}
 		
 	}
