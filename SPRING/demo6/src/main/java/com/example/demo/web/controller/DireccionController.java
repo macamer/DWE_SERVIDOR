@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.dto.ClienteDTO;
+import com.example.demo.model.dto.ClienteDireccionDTO;
 import com.example.demo.model.dto.DireccionDTO;
 import com.example.demo.service.ClienteService;
 import com.example.demo.service.DireccionService;
@@ -37,11 +38,11 @@ public class DireccionController {
 		clienteDTO = clienteService.findById(clienteDTO);
 		
 		//Obtenemos la lista de direccioens del cliente
-		List<DireccionDTO> listaDireccionesDTO = direccionService.findAllByCliente(clienteDTO);
+		List<ClienteDireccionDTO> listaClientesDireccionesDTO = direccionService.findAllByCliente(clienteDTO);
 		
 		//Pasamos los datos al modelo
 		ModelAndView mav = new ModelAndView("direcciones");
-		mav.addObject("listaDireccionesDTO", listaDireccionesDTO);
+		mav.addObject("listaClientesDireccionesDTO", listaClientesDireccionesDTO);
 		mav.addObject("clienteDTO", clienteDTO);
 		return mav;
 	}
@@ -69,8 +70,9 @@ public class DireccionController {
 		ClienteDTO clienteDTO = new ClienteDTO();
 		clienteDTO.setId(idCliente);
 		clienteDTO = clienteService.findById(clienteDTO);
+		
 		//Añadimos al cliente la direccion. Puede haber varias direcciones ya en el clienteDTO
-		clienteDTO.getListaDireccionesDTO().add(direccionDTO);
+		//clienteDTO.getListaDireccionesDTO().add(direccionDTO);
 		direccionDTO.getListaClientesDTO().add(clienteDTO);
 		direccionService.save(direccionDTO);
 		
