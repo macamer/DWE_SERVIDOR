@@ -19,65 +19,75 @@ import com.example.demo.repository.entity.Cuenta;
 @Service
 public class CuentaServiceImpl implements CuentaService {
 	private static final Logger log = LoggerFactory.getLogger(CuentaServiceImpl.class);
-	
+
 	@Autowired
 	private CuentaRepository cuentaRepository;
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
 
 	@Override
 	public List<CuentaDTO> findAllByCliente(ClienteDTO clienteDTO) {
-		log.info("CuentaServiceImpl - findAllByCliente: Lista de todas las cuentas del cliente: " 
-				+ clienteDTO.getId());
-		
-		//obtenemos la lista de cuentas del cliente
-		List<Cuenta> lista = (List<Cuenta>)cuentaRepository.findAllByCliente(clienteDTO.getId());
-		
-		//Creamos una lista de CuentaDTO que será la que devolvamos al controlador
+		log.info("CuentaServiceImpl - findAllByCliente: Lista de todas las cuentas del cliente: " + clienteDTO.getId());
+
+		// obtenemos la lista de cuentas del cliente
+		List<Cuenta> lista = (List<Cuenta>) cuentaRepository.findAllByCliente(clienteDTO.getId());
+
+		// Creamos una lista de CuentaDTO que será la que devolvamos al controlador
 		List<CuentaDTO> listaResultadoDTO = new ArrayList<CuentaDTO>();
-		
-		//Recorremos la lista de cuentas y las mapeamos a DTO
-		for(int i = 0; i < lista.size(); i++ ) {
+
+		// Recorremos la lista de cuentas y las mapeamos a DTO
+		for (int i = 0; i < lista.size(); i++) {
 			listaResultadoDTO.add(CuentaDTO.convertToDTO(lista.get(i), clienteDTO));
 		}
-		
-		//Devolvemos la lista de DTO's
+
+		// Devolvemos la lista de DTO's
 		return listaResultadoDTO;
 	}
 
 	/*
-	* Metodo 1 de borrado de un hijo en una relacion 1 a N:
-	* ejecutamos directamente el borrado por medio del id
-	*/
+	 * Metodo 1 de borrado de un hijo en una relacion 1 a N: ejecutamos directamente
+	 * el borrado por medio del id
+	 */
 	@Override
 	public void delete(CuentaDTO cuentaDTO) {
-		log.info("CuentaServiceImpl - delete: Metodo 1: borramos la cuenta: " +
-				cuentaDTO.toString());
-		
+		log.info("CuentaServiceImpl - delete: Metodo 1: borramos la cuenta: " + cuentaDTO.toString());
+
 		cuentaRepository.deleteById(cuentaDTO.getId());
-		
+
 	}
 
 	@Override
 	public void delete(CuentaDTO cuentaDTO, ClienteDTO clienteDTO) {
-		log.info("CuentaServiceImpl - delete: Metodo 2: borramos la cuenta: " +
-				cuentaDTO.toString());
-		
-		//Localizamos ambos objetos
+		log.info("CuentaServiceImpl - delete: Metodo 2: borramos la cuenta: " + cuentaDTO.toString());
+
+		// Localizamos ambos objetos
 		Optional<Cliente> cliente = clienteRepository.findById(clienteDTO.getId());
 		Optional<Cuenta> cuenta = cuentaRepository.findById(cuentaDTO.getId());
-		
-		//Eliminamos la cuenta de la lista de cuentas del cliente.
-		//Con esto eliminamos la relación y podemos borrar la cuenta
+
+		// Eliminamos la cuenta de la lista de cuentas del cliente.
+		// Con esto eliminamos la relación y podemos borrar la cuenta
 		cliente.get().getListaCuentas().remove(cuenta.get());
-		
-		//Eliminamos la cuenta
+
+		// Eliminamos la cuenta
 		cuentaRepository.deleteById(cuenta.get().getId());
-		
-		//Salvamos el cliente con la nueva situación
+
+		// Salvamos el cliente con la nueva situación
 		clienteRepository.save(cliente.get());
-		
+
+	}
+
+	@Override
+	public void save(CuentaDTO cuentaDTO) {
+		log.info("CuentaServiceImpl - save: salvamos la cuenta : " + cuentaDTO.toString());
+		Cuenta cuenta = CuentaDTO.convertToEntity(cuentaDTO);
+		// Seguimos sin tener la necesidad de buscarlo
+		Cliente cliente = new Cliente();
+		cliente.setId(cuentaDTO.getClienteDTO().getId());
+		cuenta.setCliente(cliente);
+		// cuentaRepository.save(cuenta);
+		cuentaRepository.saveCustom(cuenta);
+
 	}
 
 }
