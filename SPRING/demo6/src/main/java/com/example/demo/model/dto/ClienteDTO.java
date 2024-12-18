@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import com.example.demo.repository.entity.Cliente;
+import com.example.demo.repository.entity.ClienteDireccion;
 import com.example.demo.repository.entity.Cuenta;
 import com.example.demo.repository.entity.Direccion;
 import com.example.demo.repository.entity.Recomendacion;
@@ -54,10 +55,18 @@ public class ClienteDTO implements Serializable {
 		}
 		
 		// Cargamos la lista de direcciones, que como es un Hashset hemos de convertir a ArrayList
+		/*
 		List<Direccion> listaDirecciones = new ArrayList<Direccion>(cliente.getListaDirecciones());
 		for(int i=0; i<cliente.getListaDirecciones().size(); i++) {
 			//DireccionDTO direcciondto = DireccionDTO.convertToDTO(cliente.getListaDirecciones().get(i), clienteDTO);
 			DireccionDTO direcciondto = DireccionDTO.convertToDTO(listaDirecciones.get(i), clienteDTO);
+			clienteDTO.getListaDireccionesDTO().add(direcciondto);
+		}*/
+		
+		List<ClienteDireccion> listaClientesDirecciones = new ArrayList<ClienteDireccion>(cliente.getListaClientesDirecciones());
+		for(int i=0; i<cliente.getListaClientesDirecciones().size(); i++) {
+			// Como solo nos interesa la direccion la lista que tenemos sera la lista de direccionesDTO
+			DireccionDTO direcciondto = DireccionDTO.convertToDTO(listaClientesDirecciones.get(i).getDireccion(), clienteDTO);
 			clienteDTO.getListaDireccionesDTO().add(direcciondto);
 		}
 
@@ -86,7 +95,10 @@ public class ClienteDTO implements Serializable {
 		// Cargamos la lista de direcciones
 		for(int i=0; i<clienteDTO.getListaDireccionesDTO().size(); i++) {
 			Direccion direccion = DireccionDTO.convertToEntity(clienteDTO.getListaDireccionesDTO().get(i), cliente);
-			cliente.getListaDirecciones().add(direccion);
+			ClienteDireccion cd = new ClienteDireccion();
+			cd.setCliente(cliente);
+			cd.setDireccion(direccion);
+			cliente.getListaClientesDirecciones().add(cd);
 		}
 
 		return cliente;
