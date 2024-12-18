@@ -44,8 +44,14 @@ public class CuentaDTO implements Serializable {
 		cuenta.setDc(cuentaDTO.getDc());
 		cuenta.setNumeroCuenta(cuentaDTO.getNumeroCuenta());
 		cuenta.setSaldoActual(cuentaDTO.getSaldoActual());
-		Cliente cliente = ClienteDTO.convertToEntity(cuentaDTO.getClienteDTO());
-		cuenta.setCliente(cliente);
+		
+//		Con CustomCuentaRepository
+//		Esta linea produce un error de referencia ciruclar, por lo que no mapeamos el cliente a entidad hasta que haga falta
+//		
+//		Cliente cliente = ClienteDTO.convertToEntity(cuentaDTO.getClienteDTO());
+//		cuenta.setCliente(cliente);
+		
+		
 		return cuenta;
 	}
 }
